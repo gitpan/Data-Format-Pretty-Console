@@ -1,6 +1,6 @@
 package Data::Format::Pretty::Console;
 BEGIN {
-  $Data::Format::Pretty::Console::VERSION = '0.03';
+  $Data::Format::Pretty::Console::VERSION = '0.04';
 }
 # ABSTRACT: Pretty-print data structure for console output
 
@@ -193,12 +193,16 @@ sub _format {
     } elsif ($struct eq 'aoa') {
 
         if ($is_interactive) {
-            my $t = Text::ASCIITable->new(); #{headingText => 'blah'}
-            $t->setCols(map { "column$_" } 0..@{ $data->[0] }-1);
-            for my $i (0..@$data-1) {
-                $t->addRow(map {format_cell($_)} @{ $data->[$i] });
+            if (@$data) {
+                my $t = Text::ASCIITable->new(); #{headingText => 'blah'}
+                $t->setCols(map { "column$_" } 0..@{ $data->[0] }-1);
+                for my $i (0..@$data-1) {
+                    $t->addRow(map {format_cell($_)} @{ $data->[$i] });
+                }
+                return "$t"; # stringify
+            } else {
+                return "";
             }
-            return "$t"; # stringify
         } else {
             # tab-separated
             my @t;
@@ -256,7 +260,7 @@ Data::Format::Pretty::Console - Pretty-print data structure for console output
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SYNOPSIS
 
@@ -382,7 +386,7 @@ Steven Haryanto <stevenharyanto@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by Steven Haryanto.
+This software is copyright (c) 2011 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

@@ -25,4 +25,4 @@ requires:
 resources:
   homepage: http://search.cpan.org/dist/Data-Format-Pretty-Console/
   repository: http://github.com/sharyanto/perl-Data-Format-Pretty-Console
-version: 0.03
+version: 0.04
