@@ -1,6 +1,6 @@
 package Data::Format::Pretty::Console;
 BEGIN {
-  $Data::Format::Pretty::Console::VERSION = '0.04';
+  $Data::Format::Pretty::Console::VERSION = '0.05';
 }
 # ABSTRACT: Pretty-print data structure for console output
 
@@ -14,8 +14,6 @@ use YAML::Any;
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
-
-our $Interactive;
 
 
 sub format_pretty {
@@ -144,8 +142,8 @@ sub detect_struct {
 sub _format {
     my ($data, $opts) = @_;
 
-    my $is_interactive = $Interactive // (-t STDOUT);
     my ($struct, $struct_meta) = detect_struct($data);
+    my $is_interactive = $opts->{interactive} // (-t STDOUT);
 
     if (!$struct) {
 
@@ -237,7 +235,7 @@ sub _format {
 
         my @t;
         for my $k (sort keys %$data) {
-            push @t, "$k:\n", _format($data->{$k}), "\n";
+            push @t, "$k:\n", _format($data->{$k}, $opts), "\n";
         }
         return join("", @t);
 
@@ -260,7 +258,7 @@ Data::Format::Pretty::Console - Pretty-print data structure for console output
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 SYNOPSIS
 
@@ -374,7 +372,17 @@ formatting settings will be tweakable.
 
 =head2 format_pretty($data, %opts)
 
-Return formatted data structure. Currently there is no options.
+Return formatted data structure. Options:
+
+=over 4
+
+=item * interactive => BOOL (optional, default undef)
+
+If set, will override interactive terminal detection (-t STDOUT). Simpler
+formatting will be done if terminal is non-interactive (e.g. when output is
+piped). Using this option will force simpler/full formatting.
+
+=back
 
 =head1 SEE ALSO
 

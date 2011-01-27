@@ -3,7 +3,7 @@ NAME
     output
 
 VERSION
-    version 0.04
+    version 0.05
 
 SYNOPSIS
     In your program:
@@ -116,7 +116,14 @@ DESCRIPTION
 
 FUNCTIONS
   format_pretty($data, %opts)
-    Return formatted data structure. Currently there is no options.
+    Return formatted data structure. Options:
+
+    *   interactive => BOOL (optional, default undef)
+
+        If set, will override interactive terminal detection (-t STDOUT).
+        Simpler formatting will be done if terminal is non-interactive (e.g.
+        when output is piped). Using this option will force simpler/full
+        formatting.
 
 SEE ALSO
     Modules used for formatting: Text::ASCIITable, YAML.
