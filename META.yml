@@ -19,10 +19,11 @@ meta-spec:
 name: Data-Format-Pretty-Console
 requires:
   Data::Dump::Partial: 0
+  Scalar::Util: 0
   Text::ASCIITable: 0
   YAML::Any: 0
   perl: 5.010000
 resources:
   homepage: http://search.cpan.org/dist/Data-Format-Pretty-Console/
   repository: http://github.com/sharyanto/perl-Data-Format-Pretty-Console
-version: 0.05
+version: 0.06
