@@ -1,6 +1,6 @@
 package Data::Format::Pretty::Console;
 BEGIN {
-  $Data::Format::Pretty::Console::VERSION = '0.06';
+  $Data::Format::Pretty::Console::VERSION = '0.07';
 }
 # ABSTRACT: Pretty-print data structure for console output
 
@@ -153,7 +153,8 @@ sub _format {
 
     } elsif ($struct eq 'scalar') {
 
-        return (defined($data) ? "$data" : "") . "\n";
+        my $sdata = defined($data) ? "$data" : "";
+        return $sdata =~ /\n\z/s ? $sdata : "$sdata\n";
 
     } elsif ($struct eq 'list') {
 
@@ -260,7 +261,7 @@ Data::Format::Pretty::Console - Pretty-print data structure for console output
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 SYNOPSIS
 
@@ -371,6 +372,8 @@ Most of the time, you don't have to configure anything. But in the future some
 formatting settings will be tweakable.
 
 =head1 FUNCTIONS
+
+=for Pod::Coverage (format_cell|is_cell|detect_struct)
 
 =head2 format_pretty($data, %opts)
 
