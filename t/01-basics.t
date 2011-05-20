@@ -1,5 +1,4 @@
 #!perl -Tw
-
 use strict;
 use Test::More;
 use Data::Dump::Partial qw(dumpp);
@@ -101,6 +100,20 @@ my @data = (
         struct       => undef,
         is_yaml      => 1,
     },
+    {
+        name         => 'opt table_column_orders',
+        data         => [{a=>1, bat=>1, foo=>1, bar=>1, baz=>1, quux=>1}],
+        opts         => {table_column_orders=>[[qw/foo bar baz/]]},
+        struct       => 'aoh',
+        output_re    => qr/^\| a \| foo \| bar \| bat \| baz \| quux \|\n/m,
+    },
+    {
+        name         => 'opt table_column_orders (no order matches)',
+        data         => [{a=>1, bat=>1, foo=>1, bar=>1, baz=>1, quux=>1}],
+        opts         => {table_column_orders=>[[qw/foo bar baz qux/]]},
+        struct       => 'aoh',
+        output_re    => qr/^\| a \| bar \| bat \| baz \| foo \| quux \|\n/m,
+    },
 
 );
 
@@ -122,22 +135,27 @@ sub isnt_yaml {
 sub test_dnf {
     my ($spec) = @_;
     my $data   = $spec->{data};
+    my $opts   = $spec->{opts} // {};
     my $struct = $spec->{struct};
-    my $test_name = ($struct // "unknown") . ": " . dumpp($data);
+    my $test_name = $spec->{name} //
+        ($struct // "unknown") . ": " . dumpp($data);
 
-    my ($s, $sm) =
-        Data::Format::Pretty::Console::detect_struct($data);
-    if (!$struct) {
-        ok(!$s, "$test_name: detect_struct: structure unknown");
-    } else {
-        is($s, $struct, "$test_name: detect_struct: structure is '$struct'");
+    if (exists $spec->{struct}) {
+        my ($s, $sm) =
+            Data::Format::Pretty::Console::detect_struct($data);
+        if (!$struct) {
+            ok(!$s, "$test_name: detect_struct: structure unknown");
+        } else {
+            is($s, $struct, "$test_name: detect_struct: structure is ".
+                   "'$struct'");
+        }
     }
 
     if (exists($spec->{output}) || exists($spec->{output_re}) ||
             exists($spec->{is_yaml})) {
         my $output;
         {
-            $output = format_pretty($data, {interactive=>1});
+            $output = format_pretty($data, {%$opts, interactive=>1});
         }
         if (exists($spec->{output})) {
             is($output, $spec->{output}, "$test_name: output exact match");
@@ -158,7 +176,7 @@ sub test_dnf {
             exists($spec->{is_yaml})) {
         my $output;
         {
-            $output = format_pretty($data, {interactive=>0});
+            $output = format_pretty($data, {%$opts, interactive=>0});
         }
         if (exists($spec->{output_ni})) {
             is($output, $spec->{output_ni},

@@ -21,13 +21,14 @@ my %module_build_args = (
     'Steven Haryanto <stevenharyanto@gmail.com>'
   ],
   'dist_name' => 'Data-Format-Pretty-Console',
-  'dist_version' => '0.07',
+  'dist_version' => '0.08',
   'license' => 'perl',
   'module_name' => 'Data::Format::Pretty::Console',
   'recommends' => {},
   'recursive_test_files' => 1,
   'requires' => {
     'Data::Dump::Partial' => '0',
+    'Log::Any' => '0',
     'Scalar::Util' => '0',
     'Text::ASCIITable' => '0',
     'YAML::Any' => '0',

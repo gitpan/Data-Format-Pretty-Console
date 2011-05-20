@@ -3,7 +3,7 @@ NAME
     output
 
 VERSION
-    version 0.07
+    version 0.08
 
 SYNOPSIS
     In your program:
@@ -37,8 +37,8 @@ SYNOPSIS
      baz
      qux
 
-    Hash, format_pretty({foo=>"data", bar=>"format", baz=>"pretty",
-    qux=>"console"}):
+    Hash,
+    format_pretty({foo=>"data",bar=>"format",baz=>"pretty",qux=>"console"}):
 
      .---------------.
      | key | value   |
@@ -111,8 +111,10 @@ DESCRIPTION
     more suitable format when your user pipes your program's output into
     some other program.
 
-    Most of the time, you don't have to configure anything. But in the
-    future some formatting settings will be tweakable.
+    Most of the time, you don't have to configure anything, but some options
+    are provided to tweak the output.
+
+    This module uses Log::Any for logging.
 
 FUNCTIONS
   format_pretty($data, %opts)
@@ -124,6 +126,24 @@ FUNCTIONS
         Simpler formatting will be done if terminal is non-interactive (e.g.
         when output is piped). Using this option will force simpler/full
         formatting.
+
+    *   table_column_orders => [[colname, colname], ...]
+
+        Specify column orders when drawing a table. If a table has all the
+        columns, then the column names will be ordered according to the
+        specification. For example, when table_column_orders is [[qw/foo bar
+        baz/]], this table's columns will not be reordered because it
+        doesn't have all the mentioned columns:
+
+         |foo|quux|
+
+        But this table will:
+
+         |apple|bar|baz|foo|quux|
+
+        into:
+
+         |apple|foo|bar|baz|quux|
 
 SEE ALSO
     Modules used for formatting: Text::ASCIITable, YAML.
