@@ -21,7 +21,7 @@ my %module_build_args = (
     'Steven Haryanto <stevenharyanto@gmail.com>'
   ],
   'dist_name' => 'Data-Format-Pretty-Console',
-  'dist_version' => '0.08',
+  'dist_version' => '0.09',
   'license' => 'perl',
   'module_name' => 'Data::Format::Pretty::Console',
   'recommends' => {},

@@ -3,7 +3,7 @@ NAME
     output
 
 VERSION
-    version 0.08
+    version 0.09
 
 SYNOPSIS
     In your program:
@@ -117,7 +117,7 @@ DESCRIPTION
     This module uses Log::Any for logging.
 
 FUNCTIONS
-  format_pretty($data, %opts)
+  format_pretty($data, \%opts)
     Return formatted data structure. Options:
 
     *   interactive => BOOL (optional, default undef)
