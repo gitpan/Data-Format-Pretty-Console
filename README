@@ -3,7 +3,7 @@ NAME
     output
 
 VERSION
-    version 0.09
+    version 0.10
 
 SYNOPSIS
     In your program:
@@ -20,8 +20,6 @@ SYNOPSIS
 
     List, format_pretty([qw/foo bar baz qux/]):
 
-     .------.
-     | data |
      +------+
      | foo  |
      | bar  |
@@ -40,8 +38,6 @@ SYNOPSIS
     Hash,
     format_pretty({foo=>"data",bar=>"format",baz=>"pretty",qux=>"console"}):
 
-     .---------------.
-     | key | value   |
      +-----+---------+
      | bar | format  |
      | baz | pretty  |
@@ -52,8 +48,6 @@ SYNOPSIS
     2-dimensional array, format_pretty([ [1, 2, ""], [28, "bar", 3], ["foo",
     3, undef] ]):
 
-     .-----------------------------.
-     | column0 | column1 | column2 |
      +---------+---------+---------+
      |       1 |       2 |         |
      |      28 | bar     |       3 |
