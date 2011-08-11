@@ -1,9 +1,4 @@
 package Data::Format::Pretty::Console;
-BEGIN {
-  $Data::Format::Pretty::Console::VERSION = '0.10';
-}
-# ABSTRACT: Pretty-print data structure for console output
-
 
 use 5.010;
 use strict;
@@ -18,6 +13,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
+our $VERSION = '0.11'; # VERSION
 
 sub format_pretty {
     my ($data, $opts) = @_;
@@ -25,8 +21,8 @@ sub format_pretty {
     __PACKAGE__->new($opts)->_format($data);
 }
 
-
-# OO interface is hidden, we use it just to subclass Data::Format::Pretty::HTML
+# OO interface is nto documented, we use it just to subclass
+# Data::Format::Pretty::HTML
 sub new {
     my ($class, $opts) = @_;
     $opts //= {};
@@ -353,11 +349,10 @@ sub _order_table_columns {
     \@ocols;
 }
 
-
-
 1;
+# ABSTRACT: Pretty-print data structure for console output
 
-__END__
+
 =pod
 
 =head1 NAME
@@ -366,7 +361,7 @@ Data::Format::Pretty::Console - Pretty-print data structure for console output
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 SYNOPSIS
 
@@ -474,6 +469,8 @@ This module uses L<Log::Any> for logging.
 
 =head1 FUNCTIONS
 
+=for Pod::Coverage new
+
 =head2 format_pretty($data, \%opts)
 
 Return formatted data structure. Options:
@@ -505,8 +502,6 @@ into:
 
 =back
 
-=for Pod::Coverage new
-
 =head1 SEE ALSO
 
 Modules used for formatting: L<Text::ASCIITable>, L<YAML>.
@@ -523,4 +518,7 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
+
+
+__END__
 
