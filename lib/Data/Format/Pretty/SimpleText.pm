@@ -10,7 +10,9 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.11'; # VERSION
+our $VERSION = '0.12'; # VERSION
+
+sub content_type { "text/plain" }
 
 sub format_pretty {
     my ($data, $opts) = @_;
@@ -31,7 +33,7 @@ Data::Format::Pretty::SimpleText - Pretty-print data structure as simple text
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 SYNOPSIS
 
@@ -75,7 +77,7 @@ Steven Haryanto <stevenharyanto@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011 by Steven Haryanto.
+This software is copyright (c) 2012 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
