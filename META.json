@@ -1,0 +1,53 @@
+{
+   "abstract" : "Pretty-print data structure for console output",
+   "author" : [
+      "Steven Haryanto <stevenharyanto@gmail.com>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 4.300006, CPAN::Meta::Converter version 2.113640",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Data-Format-Pretty-Console",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Module::Build" : "0.3601"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.3601"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "Data::Format::Pretty" : 0,
+            "Data::Unixish::Apply" : "0.03",
+            "JSON" : 0,
+            "Log::Any" : 0,
+            "Text::ASCIITable" : 0,
+            "YAML::Any" : 0,
+            "perl" : "5.010001"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Data::Dump::Partial" : 0
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "homepage" : "http://search.cpan.org/dist/Data-Format-Pretty-Console/",
+      "repository" : {
+         "url" : "http://github.com/sharyanto/perl-Data-Format-Pretty-Console"
+      }
+   },
+   "version" : "0.13"
+}
+

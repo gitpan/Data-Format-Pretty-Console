@@ -3,7 +3,7 @@ NAME
     output
 
 VERSION
-    version 0.12
+    version 0.13
 
 SYNOPSIS
     In your program:
@@ -121,7 +121,7 @@ FUNCTIONS
         when output is piped). Using this option will force simpler/full
         formatting.
 
-    *   table_column_orders => [[colname, colname], ...]
+    *   table_column_orders => [[COLNAME1, COLNAME2], ...]
 
         Specify column orders when drawing a table. If a table has all the
         columns, then the column names will be ordered according to the
@@ -139,6 +139,25 @@ FUNCTIONS
 
          |apple|foo|bar|baz|quux|
 
+    *   table_column_formats => [{COLNAME=>FMT, ...}, ...]
+
+        Specify formats for columns. Each table format specification is a
+        hashref {COLNAME=>FMT, COLNAME2=>FMT2, ...}. It will be applied to a
+        table if the table has all the columns. FMT is a format
+        specification according to Data::Unixish::Apply, it's basically
+        either a name of a dux function (e.g. 'date') or an array of
+        function name + arguments (e.g. ['date', [align =>
+        {align=>'middle'}]].
+
+ENVIRONMENT
+    *   FORMAT_PRETTY_TABLE_COLUMN_FORMATS
+
+        To set table_column_formats, interpreted as JSON.
+
+    *   FORMAT_PRETTY_TABLE_COLUMN_ORDERS
+
+        To set table_column_orders, interpreted as JSON.
+
 SEE ALSO
     Modules used for formatting: Text::ASCIITable, YAML.
 
@@ -152,4 +171,11 @@ COPYRIGHT AND LICENSE
 
     This is free software; you can redistribute it and/or modify it under
     the same terms as the Perl 5 programming language system itself.
+
+POD ERRORS
+    Hey! The above document had some coding errors, which are explained
+    below:
+
+    Around line 573:
+        '=item' outside of any '=over'
 
