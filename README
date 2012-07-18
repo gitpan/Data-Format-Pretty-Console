@@ -3,7 +3,7 @@ NAME
     output
 
 VERSION
-    version 0.14
+    version 0.15
 
 SYNOPSIS
     In your program:
@@ -176,6 +176,6 @@ POD ERRORS
     Hey! The above document had some coding errors, which are explained
     below:
 
-    Around line 573:
+    Around line 582:
         '=item' outside of any '=over'
 

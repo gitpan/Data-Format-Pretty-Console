@@ -5,6 +5,7 @@ use strict;
 use warnings;
 
 use Log::Any '$log';
+use Parse::VarName qw(split_varname_words);
 use Scalar::Util qw(blessed);
 use Text::ASCIITable;
 use YAML::Any;
@@ -16,7 +17,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.14'; # VERSION
+our $VERSION = '0.15'; # VERSION
 
 sub content_type { "text/plain" }
 
@@ -222,7 +223,15 @@ sub _render_table {
     unless ($colfmts) {
         $colfmts = {};
         for (@{ $t->{tbl_cols} }) {
-            if (/(?:[^A-Za-z]|\A)date(?:[^A-Za-z]|\z)/) {
+            # fooTime or FOOtime should also be detected
+            my @words = map {lc} @{ split_varname_words(varname=>$_) };
+            if ("date" ~~ @words ||
+                    "time" ~~ @words ||
+                        "ctime" ~~ @words ||
+                            "mtime" ~~ @words ||
+                                "utime" ~~ @words ||
+                                    "stime" ~~ @words
+                                ) {
                 $colfmts->{$_} = 'date';
             }
         }
@@ -429,7 +438,7 @@ Data::Format::Pretty::Console - Pretty-print data structure for console output
 
 =head1 VERSION
 
-version 0.14
+version 0.15
 
 =head1 SYNOPSIS
 

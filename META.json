@@ -30,6 +30,7 @@
             "Data::Unixish::Apply" : "0.03",
             "JSON" : 0,
             "Log::Any" : 0,
+            "Parse::VarName" : 0,
             "Text::ASCIITable" : 0,
             "YAML::Any" : 0,
             "perl" : "5.010001"
@@ -48,6 +49,6 @@
          "url" : "http://github.com/sharyanto/perl-Data-Format-Pretty-Console"
       }
    },
-   "version" : "0.14"
+   "version" : "0.15"
 }
 

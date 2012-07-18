@@ -18,7 +18,7 @@ my %module_build_args = (
     "Steven Haryanto <stevenharyanto\@gmail.com>"
   ],
   "dist_name" => "Data-Format-Pretty-Console",
-  "dist_version" => "0.14",
+  "dist_version" => "0.15",
   "license" => "perl",
   "module_name" => "Data::Format::Pretty::Console",
   "recommends" => {},
@@ -28,6 +28,7 @@ my %module_build_args = (
     "Data::Unixish::Apply" => "0.03",
     "JSON" => 0,
     "Log::Any" => 0,
+    "Parse::VarName" => 0,
     "Text::ASCIITable" => 0,
     "YAML::Any" => 0,
     "perl" => "5.010001"
