@@ -16,7 +16,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.13'; # VERSION
+our $VERSION = '0.14'; # VERSION
 
 sub content_type { "text/plain" }
 
@@ -32,10 +32,10 @@ sub new {
     my ($class, $opts) = @_;
     $opts //= {};
     $opts->{interactive} //= (-t STDOUT);
-    $opts->{table_column_orders} //= $json->decode_json(
+    $opts->{table_column_orders} //= $json->decode(
         $ENV{FORMAT_PRETTY_TABLE_COLUMN_ORDERS})
         if defined($ENV{FORMAT_PRETTY_TABLE_COLUMN_ORDERS});
-    $opts->{table_column_formats} //= $json->decode_json(
+    $opts->{table_column_formats} //= $json->decode(
         $ENV{FORMAT_PRETTY_TABLE_COLUMN_FORMATS})
         if defined($ENV{FORMAT_PRETTY_TABLE_COLUMN_FORMATS});
     bless {opts=>$opts}, $class;
@@ -429,7 +429,7 @@ Data::Format::Pretty::Console - Pretty-print data structure for console output
 
 =head1 VERSION
 
-version 0.13
+version 0.14
 
 =head1 SYNOPSIS
 
