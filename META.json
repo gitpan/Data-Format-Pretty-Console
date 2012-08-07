@@ -26,7 +26,6 @@
       },
       "runtime" : {
          "requires" : {
-            "Data::Format::Pretty" : 0,
             "Data::Unixish::Apply" : "0.03",
             "JSON" : 0,
             "Log::Any" : 0,
@@ -49,6 +48,6 @@
          "url" : "http://github.com/sharyanto/perl-Data-Format-Pretty-Console"
       }
    },
-   "version" : "0.16"
+   "version" : "0.17"
 }
 

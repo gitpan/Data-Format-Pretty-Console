@@ -15,7 +15,6 @@ meta-spec:
   version: 1.4
 name: Data-Format-Pretty-Console
 requires:
-  Data::Format::Pretty: 0
   Data::Unixish::Apply: 0.03
   JSON: 0
   Log::Any: 0
@@ -26,4 +25,4 @@ requires:
 resources:
   homepage: http://search.cpan.org/dist/Data-Format-Pretty-Console/
   repository: http://github.com/sharyanto/perl-Data-Format-Pretty-Console
-version: 0.16
+version: 0.17
