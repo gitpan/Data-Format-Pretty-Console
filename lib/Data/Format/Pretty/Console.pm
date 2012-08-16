@@ -17,7 +17,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.17'; # VERSION
+our $VERSION = '0.18'; # VERSION
 
 sub content_type { "text/plain" }
 
@@ -257,15 +257,48 @@ sub _format_scalar {
 
 sub _format_list {
     my ($self, $data) = @_;
-    # format list as as one-column table, elements as rows
     if ($self->{opts}{interactive}) {
-        my $t = Text::ASCIITable->new({utf8=>0}); #{headingText => 'blah'}
-        $t->setCols("data");
-        for my $i (0..@$data-1) {
-            $t->addRow($self->_format_cell($data->[$i]));
+
+        require List::Util;
+        require Term::Size;
+        require POSIX;
+
+        # format list as as columns (a la 'ls' output)
+
+        my @rows = map { $self->_format_cell($_) } @$data;
+
+        my $maxwidth = List::Util::max(map { length } @rows) // 0;
+        my ($termcols, $termrows) = Term::Size::chars(*STDOUT{IO});
+        my $numcols = 1;
+        if ($maxwidth) {
+            # table width = (2+maxwidth) + (3+maxwidth)*(numcols-1) + 2
+            $numcols = int( (($termcols-1)-$maxwidth-6)/(3+$maxwidth) + 1 );
+            $numcols = @rows if $numcols > @rows;
+            $numcols = 1 if $numcols < 1;
         }
+        my $numrows = POSIX::ceil(@rows/$numcols);
+        if ($numrows) {
+            $numcols = POSIX::ceil(@rows/$numrows);
+        }
+        #say "D: $numcols x $numrows";
+
+        my $t = Text::ASCIITable->new({utf8=>0}); #{headingText => 'blah'}
         $t->setOptions({hide_HeadRow=>1, hide_HeadLine=>1});
+        $t->setCols(map { "c$_" } 1..$numcols);
+        if ($numcols > 1) {
+            $t->setColWidth("c$_", $maxwidth, 1) for 1..$numcols;
+        }
+        for my $r (1..$numrows) {
+            my @trow;
+            for my $c (1..$numcols) {
+                my $idx = ($c-1)*$numrows + ($r-1);
+                push @trow, $idx < @rows ? $rows[$idx] : '';
+            }
+            $t->addRow(@trow);
+        }
+
         return $self->_render_table($t);
+
     } else {
         my @rows;
         for my $row (@$data) {
@@ -438,7 +471,7 @@ Data::Format::Pretty::Console - Pretty-print data structure for console output
 
 =head1 VERSION
 
-version 0.17
+version 0.18
 
 =head1 SYNOPSIS
 
@@ -454,22 +487,36 @@ Scalar, format_pretty("foo"):
 
  foo
 
-List, format_pretty([qw/foo bar baz qux/]):
+List, format_pretty([1..21]):
 
- +------+
- | foo  |
- | bar  |
- | baz  |
- | qux  |
- '------'
+ .------------------------------------------------------.
+ |  1 |  3 |  5 |  7 |  9 | 11 | 13 | 15 | 17 | 19 | 21 |
+ |  2 |  4 |  6 |  8 | 10 | 12 | 14 | 16 | 18 | 20 |    |
+ '----+----+----+----+----+----+----+----+----+----+----'
 
 The same list, when program output is being piped (that is, (-t STDOUT) is
 false):
 
- foo
- bar
- baz
- qux
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+ 10
+ 11
+ 12
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
 
 Hash, format_pretty({foo=>"data",bar=>"format",baz=>"pretty",qux=>"console"}):
 
