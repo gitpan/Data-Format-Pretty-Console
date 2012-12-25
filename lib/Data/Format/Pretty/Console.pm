@@ -17,7 +17,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.18'; # VERSION
+our $VERSION = '0.19'; # VERSION
 
 sub content_type { "text/plain" }
 
@@ -190,6 +190,7 @@ sub _format_table_columns {
         my $res = Data::Unixish::Apply::apply(in => \@vals, functions => $fmt);
         unless ($res->[0] == 200) {
             $log->warnf("Can't format column %s with %s, skipped", $col, $fmt);
+            #warn "Can't format column $col with $fmt ($res->[0] - $res->[1]), skipped";
             next;
         }
         # inject back column values into table
@@ -269,15 +270,22 @@ sub _format_list {
 
         my $maxwidth = List::Util::max(map { length } @rows) // 0;
         my ($termcols, $termrows) = Term::Size::chars(*STDOUT{IO});
+        $termcols //= 0; # if undetected
         my $numcols = 1;
         if ($maxwidth) {
+            # | some-text-some | some-text-some... |
+            # 2/\__maxwidth__/\3/\__maxwidth__/...\2
+            #
             # table width = (2+maxwidth) + (3+maxwidth)*(numcols-1) + 2
+            #
+            # so with a bit of algrebra, solve for numcols:
             $numcols = int( (($termcols-1)-$maxwidth-6)/(3+$maxwidth) + 1 );
             $numcols = @rows if $numcols > @rows;
             $numcols = 1 if $numcols < 1;
         }
         my $numrows = POSIX::ceil(@rows/$numcols);
         if ($numrows) {
+            # reduce number of columns to avoid empty columns
             $numcols = POSIX::ceil(@rows/$numrows);
         }
         #say "D: $numcols x $numrows";
@@ -451,7 +459,7 @@ sub _order_table_columns {
             (defined($orders{$a}) && defined($orders{$b}) ?
                  $orders{$a} <=> $orders{$b} : 0)
                 || $a cmp $b
-        } @$cols;
+        } (sort @$cols);
     } else {
         @ocols = sort @$cols;
     }
@@ -463,6 +471,7 @@ sub _order_table_columns {
 # ABSTRACT: Pretty-print data structure for console output
 
 
+__END__
 =pod
 
 =head1 NAME
@@ -471,7 +480,7 @@ Data::Format::Pretty::Console - Pretty-print data structure for console output
 
 =head1 VERSION
 
-version 0.18
+version 0.19
 
 =head1 SYNOPSIS
 
@@ -591,6 +600,8 @@ provided to tweak the output.
 
 This module uses L<Log::Any> for logging.
 
+=for Pod::Coverage ^(content_type)$
+
 =head1 FUNCTIONS
 
 =for Pod::Coverage new
@@ -624,16 +635,14 @@ into:
 
  |apple|foo|bar|baz|quux|
 
-=back
-
 =item * table_column_formats => [{COLNAME=>FMT, ...}, ...]
 
 Specify formats for columns. Each table format specification is a hashref
 {COLNAME=>FMT, COLNAME2=>FMT2, ...}. It will be applied to a table if the table
 has all the columns. FMT is a format specification according to
 L<Data::Unixish::Apply>, it's basically either a name of a dux function (e.g.
-'date') or an array of function name + arguments (e.g. ['date', [align =>
-{align=>'middle'}]].
+C<"date">) or an array of function name + arguments (e.g. C<< [['date', [align
+=> {align=>'middle'}]] >>).
 
 =back
 
@@ -669,7 +678,4 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-
-__END__
 

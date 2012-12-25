@@ -10,7 +10,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.18'; # VERSION
+our $VERSION = '0.19'; # VERSION
 
 sub content_type { "text/plain" }
 
@@ -25,6 +25,7 @@ sub format_pretty {
 # ABSTRACT: Pretty-print data structure as simple text
 
 
+__END__
 =pod
 
 =head1 NAME
@@ -33,7 +34,7 @@ Data::Format::Pretty::SimpleText - Pretty-print data structure as simple text
 
 =head1 VERSION
 
-version 0.18
+version 0.19
 
 =head1 SYNOPSIS
 
@@ -60,6 +61,8 @@ Some example output:
 This module just calls L<Data::Format::Pretty::Console::format_pretty> with
 C<interactive>=0 option.
 
+=for Pod::Coverage ^(content_type)$
+
 =head1 FUNCTIONS
 
 =head2 format_pretty($data, \%opts)
@@ -83,7 +86,4 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-
-__END__
 

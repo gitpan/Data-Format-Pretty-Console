@@ -3,7 +3,7 @@ NAME
     output
 
 VERSION
-    version 0.18
+    version 0.19
 
 SYNOPSIS
     In your program:
@@ -159,9 +159,9 @@ FUNCTIONS
         hashref {COLNAME=>FMT, COLNAME2=>FMT2, ...}. It will be applied to a
         table if the table has all the columns. FMT is a format
         specification according to Data::Unixish::Apply, it's basically
-        either a name of a dux function (e.g. 'date') or an array of
-        function name + arguments (e.g. ['date', [align =>
-        {align=>'middle'}]].
+        either a name of a dux function (e.g. "date") or an array of
+        function name + arguments (e.g. "[['date', [align =>
+        {align=>'middle'}]]").
 
 ENVIRONMENT
     *   FORMAT_PRETTY_TABLE_COLUMN_FORMATS
@@ -185,11 +185,4 @@ COPYRIGHT AND LICENSE
 
     This is free software; you can redistribute it and/or modify it under
     the same terms as the Perl 5 programming language system itself.
-
-POD ERRORS
-    Hey! The above document had some coding errors, which are explained
-    below:
-
-    Around line 629:
-        '=item' outside of any '=over'
 
