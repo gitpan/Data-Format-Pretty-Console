@@ -69,7 +69,7 @@ my @data = (
     {
         data         => [ 1, 2, [3, 4] ],
         struct       => "list",
-        output_re    => qr/^\| 3, 4.+---/sm,
+        output_re    => qr/\| 3, 4.+---/sm,
         ouput_ni_re  => qr/^3, 4\n/m,
     },
 
@@ -132,6 +132,8 @@ my @data = (
         output_re    => qr/2012/m, # XXX and not /1999/
     },
 
+    # XXX multi-column
+    # XXX max_columns
 );
 
 sub is_yaml {

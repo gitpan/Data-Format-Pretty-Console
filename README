@@ -3,7 +3,7 @@ NAME
     output
 
 VERSION
-    version 0.19
+    version 0.20
 
 SYNOPSIS
     In your program:
@@ -135,6 +135,12 @@ FUNCTIONS
         when output is piped). Using this option will force simpler/full
         formatting.
 
+    *   list_max_columns => INT
+
+        When displaying list as columns, specify maximum number of columns.
+        This can be used to force fewer columns (for example, single column)
+        instead of using the whole available terminal width.
+
     *   table_column_orders => [[COLNAME1, COLNAME2], ...]
 
         Specify column orders when drawing a table. If a table has all the
@@ -164,13 +170,25 @@ FUNCTIONS
         {align=>'middle'}]]").
 
 ENVIRONMENT
+    *   FORMAT_PRETTY_LIST_MAX_COLUMNS
+
+        To set "list_max_columns" option.
+
     *   FORMAT_PRETTY_TABLE_COLUMN_FORMATS
 
-        To set table_column_formats, interpreted as JSON.
+        To set "table_column_formats" option, interpreted as JSON.
 
     *   FORMAT_PRETTY_TABLE_COLUMN_ORDERS
 
-        To set table_column_orders, interpreted as JSON.
+        To set "table_column_orders" option, interpreted as JSON.
+
+TODO
+    *   when displaying list in columns, option to fill column-wise instead
+        of row-wise
+
+        This is like 'ls -x' (our default) vs 'ls'.
+
+        Probably set via "list_fill_by_columns" option.
 
 SEE ALSO
     Modules used for formatting: Text::ASCIITable, YAML.
