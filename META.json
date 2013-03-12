@@ -4,7 +4,7 @@
       "Steven Haryanto <stevenharyanto@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300006, CPAN::Meta::Converter version 2.113640",
+   "generated_by" : "Dist::Zilla version 4.300015, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "perl_5"
    ],
@@ -31,19 +31,19 @@
       },
       "runtime" : {
          "requires" : {
-            "Data::Unixish::Apply" : "0.03",
-            "JSON" : 0,
-            "Log::Any" : 0,
-            "Parse::VarName" : 0,
-            "Term::Size" : 0,
-            "Text::ASCIITable" : 0,
-            "YAML::Any" : 0,
+            "Data::Unixish::Apply" : "1.25",
+            "JSON" : "0",
+            "Log::Any" : "0",
+            "Parse::VarName" : "0",
+            "Term::Size" : "0",
+            "Text::ASCIITable" : "0",
+            "YAML::Any" : "0",
             "perl" : "5.010001"
          }
       },
       "test" : {
          "requires" : {
-            "Data::Dump::Partial" : 0
+            "Data::Dump::Partial" : "0"
          }
       }
    },
@@ -54,6 +54,6 @@
          "url" : "http://github.com/sharyanto/perl-Data-Format-Pretty-Console"
       }
    },
-   "version" : "0.20"
+   "version" : "0.21"
 }
 
