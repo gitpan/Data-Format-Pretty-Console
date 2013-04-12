@@ -3,7 +3,7 @@ NAME
     output
 
 VERSION
-    version 0.21
+    version 0.22
 
 SYNOPSIS
     In your program:
@@ -170,6 +170,11 @@ FUNCTIONS
         {align=>'middle'}]]").
 
 ENVIRONMENT
+    *   INTERACTIVE (bool)
+
+        To set default for "interactive" option (overrides automatic
+        detection).
+
     *   FORMAT_PRETTY_LIST_MAX_COLUMNS
 
         To set "list_max_columns" option.

@@ -18,7 +18,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.21'; # VERSION
+our $VERSION = '0.22'; # VERSION
 
 sub content_type { "text/plain" }
 
@@ -33,7 +33,7 @@ sub format_pretty {
 sub new {
     my ($class, $opts) = @_;
     $opts //= {};
-    $opts->{interactive} //= (-t STDOUT);
+    $opts->{interactive} //= $ENV{INTERACTIVE} // (-t STDOUT);
     $opts->{table_column_orders} //= $json->decode(
         $ENV{FORMAT_PRETTY_TABLE_COLUMN_ORDERS})
         if defined($ENV{FORMAT_PRETTY_TABLE_COLUMN_ORDERS});
@@ -495,7 +495,7 @@ Data::Format::Pretty::Console - Pretty-print data structure for console output
 
 =head1 VERSION
 
-version 0.21
+version 0.22
 
 =head1 SYNOPSIS
 
@@ -670,6 +670,10 @@ C<"date">) or an array of function name + arguments (e.g. C<< [['date', [align
 =head1 ENVIRONMENT
 
 =over
+
+=item * INTERACTIVE (bool)
+
+To set default for C<interactive> option (overrides automatic detection).
 
 =item * FORMAT_PRETTY_LIST_MAX_COLUMNS
 
