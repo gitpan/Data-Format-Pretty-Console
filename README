@@ -3,7 +3,7 @@ NAME
     output
 
 VERSION
-    version 0.22
+    version 0.23
 
 SYNOPSIS
     In your program:
@@ -196,7 +196,7 @@ TODO
         Probably set via "list_fill_by_columns" option.
 
 SEE ALSO
-    Modules used for formatting: Text::ASCIITable, YAML.
+    Modules used for formatting: Text::ANSITable, YAML.
 
     Data::Format::Pretty
 

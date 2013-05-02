@@ -18,18 +18,18 @@ my %module_build_args = (
     "Steven Haryanto <stevenharyanto\@gmail.com>"
   ],
   "dist_name" => "Data-Format-Pretty-Console",
-  "dist_version" => "0.22",
+  "dist_version" => "0.23",
   "license" => "perl",
   "module_name" => "Data::Format::Pretty::Console",
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
-    "Data::Unixish::Apply" => "1.25",
+    "Data::Unixish::Apply" => "1.33",
     "JSON" => 0,
     "Log::Any" => 0,
     "Parse::VarName" => 0,
     "Term::Size" => 0,
-    "Text::ASCIITable" => 0,
+    "Text::ANSITable" => "0.05",
     "YAML::Any" => 0,
     "perl" => "5.010001"
   },

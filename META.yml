@@ -15,15 +15,15 @@ meta-spec:
   version: 1.4
 name: Data-Format-Pretty-Console
 requires:
-  Data::Unixish::Apply: 1.25
+  Data::Unixish::Apply: 1.33
   JSON: 0
   Log::Any: 0
   Parse::VarName: 0
   Term::Size: 0
-  Text::ASCIITable: 0
+  Text::ANSITable: 0.05
   YAML::Any: 0
   perl: 5.010001
 resources:
   homepage: http://search.cpan.org/dist/Data-Format-Pretty-Console/
   repository: http://github.com/sharyanto/perl-Data-Format-Pretty-Console
-version: 0.22
+version: 0.23
