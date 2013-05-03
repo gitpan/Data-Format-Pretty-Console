@@ -18,7 +18,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.23'; # VERSION
+our $VERSION = '0.24'; # VERSION
 
 sub content_type { "text/plain" }
 
@@ -218,7 +218,7 @@ sub _render_table {
         $colfmts = undef unless keys %$colfmts;
     }
 
-    # render using Text::ASCIITable
+    # render using Text::ANSITable
     my $at = Text::ANSITable->new;
     $at->columns($t->{cols});
     $at->rows($t->{rows});
@@ -226,10 +226,11 @@ sub _render_table {
         $at->{$_} = $t->{at_opts}{$_} for keys %{ $t->{at_opts} };
     }
     if ($colfmts) {
-        $at->column_style($_ => formats => $colfmts->{$_}) for keys %$colfmts;
+        $at->set_column_style($_ => formats => $colfmts->{$_})
+            for keys %$colfmts;
     }
     if ($t->{col_widths}) {
-        $at->column_style($_ => width => $t->{col_widths}{$_})
+        $at->set_column_style($_ => width => $t->{col_widths}{$_})
             for keys %{ $t->{col_widths} };
     }
     $at->draw;
@@ -472,7 +473,7 @@ Data::Format::Pretty::Console - Pretty-print data structure for console output
 
 =head1 VERSION
 
-version 0.23
+version 0.24
 
 =head1 SYNOPSIS
 
@@ -580,8 +581,8 @@ suitable for console programs. The idea of this module is that for you to just
 merrily dump data structure to the console, and this module will figure out how
 to best display your data to the end-user.
 
-Currently this module tries to display the data mostly as a nice ASCII table (or
-a series of ASCII tables), and failing that, display it as YAML.
+Currently this module tries to display the data mostly as a nice text table (or
+a series of text tables), and failing that, display it as YAML.
 
 This module takes piping into consideration, and will output a simpler, more
 suitable format when your user pipes your program's output into some other

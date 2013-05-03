@@ -3,7 +3,7 @@ NAME
     output
 
 VERSION
-    version 0.23
+    version 0.24
 
 SYNOPSIS
     In your program:
@@ -111,8 +111,8 @@ DESCRIPTION
     for you to just merrily dump data structure to the console, and this
     module will figure out how to best display your data to the end-user.
 
-    Currently this module tries to display the data mostly as a nice ASCII
-    table (or a series of ASCII tables), and failing that, display it as
+    Currently this module tries to display the data mostly as a nice text
+    table (or a series of text tables), and failing that, display it as
     YAML.
 
     This module takes piping into consideration, and will output a simpler,
