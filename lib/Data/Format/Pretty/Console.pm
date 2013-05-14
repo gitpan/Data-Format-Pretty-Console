@@ -18,7 +18,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.24'; # VERSION
+our $VERSION = '0.25'; # VERSION
 
 sub content_type { "text/plain" }
 
@@ -262,7 +262,7 @@ sub _format_list {
         my @rows = map { $self->_format_cell($_) } @$data;
 
         my $maxwidth = List::Util::max(map { length } @rows) // 0;
-        my ($termcols, $termrows) = Term::Size::chars(*STDOUT{IO});
+        my ($termcols, $termrows) = Term::Size::chars();
         $termcols //= 0; # if undetected
         my $numcols = 1;
         if ($maxwidth) {
@@ -473,7 +473,7 @@ Data::Format::Pretty::Console - Pretty-print data structure for console output
 
 =head1 VERSION
 
-version 0.24
+version 0.25
 
 =head1 SYNOPSIS
 
