@@ -6,7 +6,6 @@ use warnings;
 use Log::Any '$log';
 
 use Data::Unixish::Apply;
-use Parse::VarName qw(split_varname_words);
 use Scalar::Util qw(blessed);
 use Text::ANSITable;
 use YAML::Any;
@@ -18,7 +17,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.25'; # VERSION
+our $VERSION = '0.26'; # VERSION
 
 sub content_type { "text/plain" }
 
@@ -199,25 +198,6 @@ sub _render_table {
         }
     }
 
-    # if not, pick some defaults (e.g. date)
-    unless ($colfmts) {
-        $colfmts = {};
-        for (@{ $t->{cols} }) {
-            # fooTime or FOOtime should also be detected
-            my @words = map {lc} @{ split_varname_words(varname=>$_) };
-            if ("date" ~~ @words ||
-                    "time" ~~ @words ||
-                        "ctime" ~~ @words ||
-                            "mtime" ~~ @words ||
-                                "utime" ~~ @words ||
-                                    "stime" ~~ @words
-                                ) {
-                $colfmts->{$_} = 'date';
-            }
-        }
-        $colfmts = undef unless keys %$colfmts;
-    }
-
     # render using Text::ANSITable
     my $at = Text::ANSITable->new;
     $at->columns($t->{cols});
@@ -254,7 +234,7 @@ sub _format_list {
     if ($self->{opts}{interactive}) {
 
         require List::Util;
-        require Term::Size;
+        require Term::Size::ReadKey;
         require POSIX;
 
         # format list as as columns (a la 'ls' output)
@@ -262,7 +242,7 @@ sub _format_list {
         my @rows = map { $self->_format_cell($_) } @$data;
 
         my $maxwidth = List::Util::max(map { length } @rows) // 0;
-        my ($termcols, $termrows) = Term::Size::chars();
+        my ($termcols, $termrows) = Term::Size::ReadKey::chars();
         $termcols //= 0; # if undetected
         my $numcols = 1;
         if ($maxwidth) {
@@ -473,7 +453,7 @@ Data::Format::Pretty::Console - Pretty-print data structure for console output
 
 =head1 VERSION
 
-version 0.25
+version 0.26
 
 =head1 SYNOPSIS
 
