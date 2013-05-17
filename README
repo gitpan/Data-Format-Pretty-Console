@@ -3,7 +3,7 @@ NAME
     output
 
 VERSION
-    version 0.27
+    version 0.28
 
 SYNOPSIS
     In your program:
@@ -170,22 +170,26 @@ FUNCTIONS
         {align=>'middle'}]]").
 
 ENVIRONMENT
-    *   INTERACTIVE (bool)
+    *   INTERACTIVE => BOOL
 
         To set default for "interactive" option (overrides automatic
         detection).
 
-    *   FORMAT_PRETTY_LIST_MAX_COLUMNS
+    *   FORMAT_PRETTY_LIST_MAX_COLUMNS => INT
 
         To set "list_max_columns" option.
 
-    *   FORMAT_PRETTY_TABLE_COLUMN_FORMATS
+    *   FORMAT_PRETTY_TABLE_COLUMN_FORMATS => ARRAY (JSON)
 
         To set "table_column_formats" option, interpreted as JSON.
 
-    *   FORMAT_PRETTY_TABLE_COLUMN_ORDERS
+    *   FORMAT_PRETTY_TABLE_COLUMN_ORDERS => ARRAY (JSON)
 
         To set "table_column_orders" option, interpreted as JSON.
+
+    *   COLUMNS => INT
+
+        To override terminal width detection.
 
 TODO
     *   when displaying list in columns, option to fill column-wise instead

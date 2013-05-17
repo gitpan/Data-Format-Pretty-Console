@@ -17,7 +17,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.27'; # VERSION
+our $VERSION = '0.28'; # VERSION
 
 sub content_type { "text/plain" }
 
@@ -234,7 +234,6 @@ sub _format_list {
     if ($self->{opts}{interactive}) {
 
         require List::Util;
-        require Term::Size;
         require POSIX;
 
         # format list as as columns (a la 'ls' output)
@@ -242,7 +241,13 @@ sub _format_list {
         my @rows = map { $self->_format_cell($_) } @$data;
 
         my $maxwidth = List::Util::max(map { length } @rows) // 0;
-        my ($termcols, $termrows) = Term::Size::chars();
+        my ($termcols, $termrows);
+        if ($ENV{COLUMNS}) {
+            $termcols = $ENV{COLUMNS};
+        } else {
+            require Term::Size;
+            ($termcols, $termrows) = Term::Size::chars();
+        }
         $termcols //= 0; # if undetected
         my $numcols = 1;
         if ($maxwidth) {
@@ -453,7 +458,7 @@ Data::Format::Pretty::Console - Pretty-print data structure for console output
 
 =head1 VERSION
 
-version 0.27
+version 0.28
 
 =head1 SYNOPSIS
 
@@ -629,21 +634,25 @@ C<"date">) or an array of function name + arguments (e.g. C<< [['date', [align
 
 =over
 
-=item * INTERACTIVE (bool)
+=item * INTERACTIVE => BOOL
 
 To set default for C<interactive> option (overrides automatic detection).
 
-=item * FORMAT_PRETTY_LIST_MAX_COLUMNS
+=item * FORMAT_PRETTY_LIST_MAX_COLUMNS => INT
 
 To set C<list_max_columns> option.
 
-=item * FORMAT_PRETTY_TABLE_COLUMN_FORMATS
+=item * FORMAT_PRETTY_TABLE_COLUMN_FORMATS => ARRAY (JSON)
 
 To set C<table_column_formats> option, interpreted as JSON.
 
-=item * FORMAT_PRETTY_TABLE_COLUMN_ORDERS
+=item * FORMAT_PRETTY_TABLE_COLUMN_ORDERS => ARRAY (JSON)
 
 To set C<table_column_orders> option, interpreted as JSON.
+
+=item * COLUMNS => INT
+
+To override terminal width detection.
 
 =back
 
