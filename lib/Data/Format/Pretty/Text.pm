@@ -10,7 +10,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.29'; # VERSION
+our $VERSION = '0.30'; # VERSION
 
 sub content_type { "text/plain" }
 
@@ -24,8 +24,8 @@ sub format_pretty {
 1;
 # ABSTRACT: Pretty-print data structure as text
 
-
 __END__
+
 =pod
 
 =head1 NAME
@@ -34,7 +34,7 @@ Data::Format::Pretty::Text - Pretty-print data structure as text
 
 =head1 VERSION
 
-version 0.29
+version 0.30
 
 =head1 SYNOPSIS
 
@@ -88,4 +88,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-

@@ -18,7 +18,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.29'; # VERSION
+our $VERSION = '0.30'; # VERSION
 
 sub content_type { "text/plain" }
 
@@ -245,8 +245,7 @@ sub _format_list {
         my ($termcols, $termrows);
         if ($ENV{COLUMNS}) {
             $termcols = $ENV{COLUMNS};
-        } else {
-            require Term::Size;
+        } elsif (eval { require Term::Size; 1 }) {
             ($termcols, $termrows) = Term::Size::chars();
         }
         $termcols //= 0; # if undetected
@@ -449,8 +448,8 @@ sub _order_table_columns {
 1;
 # ABSTRACT: Pretty-print data structure for console output
 
-
 __END__
+
 =pod
 
 =head1 NAME
@@ -459,7 +458,7 @@ Data::Format::Pretty::Console - Pretty-print data structure for console output
 
 =head1 VERSION
 
-version 0.29
+version 0.30
 
 =head1 SYNOPSIS
 
@@ -687,4 +686,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
