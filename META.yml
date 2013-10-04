@@ -4,15 +4,21 @@ author:
   - 'Steven Haryanto <stevenharyanto@gmail.com>'
 build_requires:
   Data::Dump::Partial: 0
+  File::Spec: 0
+  IO::Handle: 0
+  IPC::Open3: 0
+  Test::More: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300035, CPAN::Meta::Converter version 2.131560'
+generated_by: 'Dist::Zilla version 4.300035, CPAN::Meta::Converter version 2.132140'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
 name: Data-Format-Pretty-Console
+recommends:
+  Term::Size: 0
 requires:
   Data::Unixish: 1.34
   Data::Unixish::Apply: 1.33
@@ -25,4 +31,4 @@ requires:
 resources:
   homepage: http://search.cpan.org/dist/Data-Format-Pretty-Console/
   repository: http://github.com/sharyanto/perl-Data-Format-Pretty-Console
-version: 0.30
+version: 0.31

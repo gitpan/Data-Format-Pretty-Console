@@ -18,7 +18,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.30'; # VERSION
+our $VERSION = '0.31'; # VERSION
 
 sub content_type { "text/plain" }
 
@@ -227,6 +227,7 @@ sub _format_scalar {
     my ($self, $data) = @_;
 
     my $sdata = defined($data) ? "$data" : "";
+    return "" if !length($sdata);
     return $sdata =~ /\n\z/s ? $sdata : "$sdata\n";
 }
 
@@ -247,8 +248,11 @@ sub _format_list {
             $termcols = $ENV{COLUMNS};
         } elsif (eval { require Term::Size; 1 }) {
             ($termcols, $termrows) = Term::Size::chars();
+        } else {
+            # sane default, on windows we need to offset by 1 because printing
+            # at the rightmost column will cause cursor to move down one line.
+            $termcols = $^O =~ /Win/ ? 79 : 80;
         }
-        $termcols //= 0; # if undetected
         my $numcols = 1;
         if ($maxwidth) {
             # | some-text-some | some-text-some... |
@@ -458,7 +462,7 @@ Data::Format::Pretty::Console - Pretty-print data structure for console output
 
 =head1 VERSION
 
-version 0.30
+version 0.31
 
 =head1 SYNOPSIS
 
