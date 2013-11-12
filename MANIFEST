@@ -6,6 +6,7 @@ META.json
 META.yml
 Makefile.PL
 README
+build.log
 dist.ini
 lib/Data/Format/Pretty/Console.pm
 lib/Data/Format/Pretty/SimpleText.pm
@@ -15,3 +16,4 @@ t/01-basics.t
 t/release-pod-coverage.t
 t/release-pod-syntax.t
 t/release-rinci.t
+weaver.ini

@@ -18,7 +18,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.31'; # VERSION
+our $VERSION = '0.32'; # VERSION
 
 sub content_type { "text/plain" }
 
@@ -456,13 +456,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 Data::Format::Pretty::Console - Pretty-print data structure for console output
 
 =head1 VERSION
 
-version 0.31
+version 0.32
 
 =head1 SYNOPSIS
 
@@ -586,6 +588,9 @@ This module uses L<Log::Any> for logging.
 
 =head1 FUNCTIONS
 
+
+None are exported by default, but they are exportable.
+
 =for Pod::Coverage new
 
 =head2 format_pretty($data, \%opts)
@@ -677,6 +682,24 @@ Probably set via C<list_fill_by_columns> option.
 Modules used for formatting: L<Text::ANSITable>, L<YAML>.
 
 L<Data::Format::Pretty>
+
+=head1 HOMEPAGE
+
+Please visit the project's homepage at L<https://metacpan.org/release/Data-Format-Pretty-Console>.
+
+=head1 SOURCE
+
+Source repository is at L<https://github.com/sharyanto/perl-Data-Format-Pretty-Console>.
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website
+L<https://rt.cpan.org/Public/Dist/Display.html?Name=Data-Format-Pretty-Cons
+ole>
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
 
 =head1 AUTHOR
 
