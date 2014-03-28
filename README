@@ -3,7 +3,7 @@ NAME
     output
 
 VERSION
-    version 0.32
+    version 0.33
 
 SYNOPSIS
     In your program:
@@ -125,8 +125,6 @@ DESCRIPTION
     This module uses Log::Any for logging.
 
 FUNCTIONS
-    None are exported by default, but they are exportable.
-
   format_pretty($data, \%opts)
     Return formatted data structure. Options:
 
@@ -169,7 +167,17 @@ FUNCTIONS
         specification according to Data::Unixish::Apply, it's basically
         either a name of a dux function (e.g. "date") or an array of
         function name + arguments (e.g. "[['date', [align =>
-        {align=>'middle'}]]").
+        {align=>'middle'}]]"). This will be fed to Text::ANSITable's
+        "formats" column style.
+
+    *   table_column_types => [{COLNAME=>TYPE, ...}, ...]
+
+        Specify types for columns. Each table format specification is a
+        hashref {COLNAME=>TYPE, COLNAME2=>TYPE2, ...}. It will be applied to
+        a table if the table has all the columns. TYPE is type name
+        according to Sah schema. This will be fed to Text::ANSITable's
+        "type" column style to give hints on how to format the column.
+        Sometimes this is the simpler alternative to "table_column_formats".
 
 ENVIRONMENT
     *   INTERACTIVE => BOOL
@@ -184,6 +192,10 @@ ENVIRONMENT
     *   FORMAT_PRETTY_TABLE_COLUMN_FORMATS => ARRAY (JSON)
 
         To set "table_column_formats" option, interpreted as JSON.
+
+    *   FORMAT_PRETTY_TABLE_COLUMN_TYPES => ARRAY (JSON)
+
+        To set "table_column_types" option, interpreted as JSON.
 
     *   FORMAT_PRETTY_TABLE_COLUMN_ORDERS => ARRAY (JSON)
 
@@ -216,8 +228,8 @@ SOURCE
 
 BUGS
     Please report any bugs or feature requests on the bugtracker website
-    "/rt.cpan.org/Public/Dist/Display.html?Name=Data-Format-Pretty-Cons ole"
-    in https:
+    <https://rt.cpan.org/Public/Dist/Display.html?Name=Data-Format-Pretty-Co
+    nsole>
 
     When submitting a bug or request, please include a test-file or a patch
     to an existing test-file that illustrates the bug or desired feature.
@@ -226,7 +238,7 @@ AUTHOR
     Steven Haryanto <stevenharyanto@gmail.com>
 
 COPYRIGHT AND LICENSE
-    This software is copyright (c) 2013 by Steven Haryanto.
+    This software is copyright (c) 2014 by Steven Haryanto.
 
     This is free software; you can redistribute it and/or modify it under
     the same terms as the Perl 5 programming language system itself.

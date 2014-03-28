@@ -18,7 +18,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.32'; # VERSION
+our $VERSION = '0.33'; # VERSION
 
 sub content_type { "text/plain" }
 
@@ -40,6 +40,9 @@ sub new {
     $opts->{table_column_formats} //= $json->decode(
         $ENV{FORMAT_PRETTY_TABLE_COLUMN_FORMATS})
         if defined($ENV{FORMAT_PRETTY_TABLE_COLUMN_FORMATS});
+    $opts->{table_column_types} //= $json->decode(
+        $ENV{FORMAT_PRETTY_TABLE_COLUMN_TYPES})
+        if defined($ENV{FORMAT_PRETTY_TABLE_COLUMN_TYPES});
     $opts->{list_max_columns} //= $ENV{FORMAT_PRETTY_LIST_MAX_COLUMNS};
     bless {opts=>$opts}, $class;
 }
@@ -182,8 +185,6 @@ sub _render_table {
     my ($self, $t) = @_;
 
     my $colfmts;
-
-    # does table match this setting?
     my $tcff = $self->{opts}{table_column_formats};
     if ($tcff) {
         for my $tcf (@$tcff) {
@@ -199,6 +200,22 @@ sub _render_table {
         }
     }
 
+    my $coltypes;
+    my $tctt = $self->{opts}{table_column_types};
+    if ($tctt) {
+        for my $tct (@$tctt) {
+            my $match = 1;
+            my @tcols = @{ $t->{cols} };
+            for my $scol (keys %$tct) {
+                do { $match = 0; last } unless $scol ~~ @tcols;
+            }
+            if ($match) {
+                $coltypes = $tct;
+                last;
+            }
+        }
+    }
+
     # render using Text::ANSITable
     my $at = Text::ANSITable->new;
     $at->columns($t->{cols});
@@ -209,6 +226,10 @@ sub _render_table {
     if ($colfmts) {
         $at->set_column_style($_ => formats => $colfmts->{$_})
             for keys %$colfmts;
+    }
+    if ($coltypes) {
+        $at->set_column_style($_ => type => $coltypes->{$_})
+            for keys %$coltypes;
     }
     if ($t->{col_widths}) {
         $at->set_column_style($_ => width => $t->{col_widths}{$_})
@@ -464,7 +485,7 @@ Data::Format::Pretty::Console - Pretty-print data structure for console output
 
 =head1 VERSION
 
-version 0.32
+version 0.33
 
 =head1 SYNOPSIS
 
@@ -588,9 +609,6 @@ This module uses L<Log::Any> for logging.
 
 =head1 FUNCTIONS
 
-
-None are exported by default, but they are exportable.
-
 =for Pod::Coverage new
 
 =head2 format_pretty($data, \%opts)
@@ -635,7 +653,17 @@ Specify formats for columns. Each table format specification is a hashref
 has all the columns. FMT is a format specification according to
 L<Data::Unixish::Apply>, it's basically either a name of a dux function (e.g.
 C<"date">) or an array of function name + arguments (e.g. C<< [['date', [align
-=> {align=>'middle'}]] >>).
+=> {align=>'middle'}]] >>). This will be fed to L<Text::ANSITable>'s C<formats>
+column style.
+
+=item * table_column_types => [{COLNAME=>TYPE, ...}, ...]
+
+Specify types for columns. Each table format specification is a hashref
+{COLNAME=>TYPE, COLNAME2=>TYPE2, ...}. It will be applied to a table if the
+table has all the columns. TYPE is type name according to L<Sah> schema. This
+will be fed to L<Text::ANSITable>'s C<type> column style to give hints on how to
+format the column. Sometimes this is the simpler alternative to
+C<table_column_formats>.
 
 =back
 
@@ -654,6 +682,10 @@ To set C<list_max_columns> option.
 =item * FORMAT_PRETTY_TABLE_COLUMN_FORMATS => ARRAY (JSON)
 
 To set C<table_column_formats> option, interpreted as JSON.
+
+=item * FORMAT_PRETTY_TABLE_COLUMN_TYPES => ARRAY (JSON)
+
+To set C<table_column_types> option, interpreted as JSON.
 
 =item * FORMAT_PRETTY_TABLE_COLUMN_ORDERS => ARRAY (JSON)
 
@@ -693,9 +725,7 @@ Source repository is at L<https://github.com/sharyanto/perl-Data-Format-Pretty-C
 
 =head1 BUGS
 
-Please report any bugs or feature requests on the bugtracker website
-L<https://rt.cpan.org/Public/Dist/Display.html?Name=Data-Format-Pretty-Cons
-ole>
+Please report any bugs or feature requests on the bugtracker website L<https://rt.cpan.org/Public/Dist/Display.html?Name=Data-Format-Pretty-Console>
 
 When submitting a bug or request, please include a test-file or a
 patch to an existing test-file that illustrates the bug or desired
@@ -707,7 +737,7 @@ Steven Haryanto <stevenharyanto@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Steven Haryanto.
+This software is copyright (c) 2014 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

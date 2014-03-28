@@ -10,7 +10,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(format_pretty);
 
-our $VERSION = '0.32'; # VERSION
+our $VERSION = '0.33'; # VERSION
 
 sub content_type { "text/plain" }
 
@@ -36,7 +36,7 @@ Data::Format::Pretty::Text - Pretty-print data structure as text
 
 =head1 VERSION
 
-version 0.32
+version 0.33
 
 =head1 SYNOPSIS
 
@@ -74,9 +74,6 @@ C<interactive>=1 option.
 Return formatted data structure. See L<Data::Format::Pretty::Console> for
 details.
 
-
-None are exported by default, but they are exportable.
-
 =head1 SEE ALSO
 
 L<Data::Format::Pretty::Console>
@@ -91,9 +88,7 @@ Source repository is at L<https://github.com/sharyanto/perl-Data-Format-Pretty-C
 
 =head1 BUGS
 
-Please report any bugs or feature requests on the bugtracker website
-L<https://rt.cpan.org/Public/Dist/Display.html?Name=Data-Format-Pretty-Cons
-ole>
+Please report any bugs or feature requests on the bugtracker website L<https://rt.cpan.org/Public/Dist/Display.html?Name=Data-Format-Pretty-Console>
 
 When submitting a bug or request, please include a test-file or a
 patch to an existing test-file that illustrates the bug or desired
@@ -105,7 +100,7 @@ Steven Haryanto <stevenharyanto@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Steven Haryanto.
+This software is copyright (c) 2014 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
